@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.polaris.mikeslocation; 
+ 
+</span><span class="s0">import </span><span class="s1">android.Manifest; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.content.pm.PackageManager; 
+</span><span class="s0">import </span><span class="s1">android.location.Location; 
+</span><span class="s0">import </span><span class="s1">android.location.LocationListener; 
+</span><span class="s0">import </span><span class="s1">android.location.LocationManager; 
+</span><span class="s0">import </span><span class="s1">android.os.Build; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.os.Environment; 
+</span><span class="s0">import </span><span class="s1">android.provider.Settings; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.NonNull; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.Nullable; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.ActivityCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.util.Log; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.File; 
+</span><span class="s0">import </span><span class="s1">java.io.FileWriter; 
+</span><span class="s0">import </span><span class="s1">java.io.IOException; 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStream; 
+ 
+ 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { </span><span class="s2">//extends just means attached or adds on to the class. Implement is for interfaces. Inheritance (related to and shares assets)</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">Button b; </span><span class="s2">//declaration of a class variable? Object. This has to be an object that loads into memory. Intro to the players. These are instance variables.</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView t;</span><span class="s2">//this is an instance variable assignment of t and b</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">LocationManager locationManager; </span><span class="s2">//you call this guy</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">LocationListener listener; </span><span class="s2">// minion</span><span class="s1"> 
+ 
+ 
+ 
+ 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(@Nullable Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); </span><span class="s2">//this line has something to do with AppCompatActivity extension</span><span class="s1"> 
+ 
+        setContentView(R.layout.activity_main); </span><span class="s2">//in AppCompatActivity; R.layout.activity_main = view in setContentView(View view)</span><span class="s1"> 
+ 
+ 
+        t = (TextView) findViewById(R.id.textView);</span><span class="s2">// the () is &quot;casting&quot;</span><span class="s1"> 
+        b = (Button) findViewById(R.id.button3); 
+ 
+ 
+ 
+ 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); </span><span class="s2">//creating an object = locationManager (blueprint is LocationManager)</span><span class="s1"> 
+ 
+        listener = </span><span class="s0">new </span><span class="s1">LocationListener() { </span><span class="s2">//creating a listening object</span><span class="s1"> 
+ 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onLocationChanged(Location location) { 
+ 
+ 
+                t.append(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3"> &quot; </span><span class="s1">+ location.getLongitude() + </span><span class="s3">&quot; &quot; </span><span class="s1">+ location.getLatitude() + </span><span class="s3">&quot; &quot; </span><span class="s1">+ location.getAltitude() + </span><span class="s3">&quot;meters&quot; </span><span class="s1">+ location.getSpeed() + </span><span class="s3">&quot;m/s&quot;</span><span class="s1">); 
+ 
+ 
+ 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onStatusChanged(String s, </span><span class="s0">int </span><span class="s1">i, Bundle bundle) { 
+                t.append(</span><span class="s3">&quot;/n Nigga!, Some shit jus happed&quot;</span><span class="s1">); 
+ 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onProviderEnabled(String s) { 
+                t.append(</span><span class="s3">&quot;/n&quot; </span><span class="s1">+ </span><span class="s3">&quot;onProvider Enable&quot;</span><span class="s1">); 
+ 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onProviderDisabled(String s) { 
+ 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); 
+                startActivity(i); 
+            } 
+        }; 
+        configure_button(); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onRequestPermissionsResult(</span><span class="s0">int </span><span class="s1">requestCode, @NonNull String[] permissions, @NonNull </span><span class="s0">int</span><span class="s1">[] grantResults) { 
+        </span><span class="s0">switch </span><span class="s1">(requestCode){ 
+            </span><span class="s0">case </span><span class="s4">10</span><span class="s1">: 
+                configure_button(); 
+                </span><span class="s0">break</span><span class="s1">; 
+            </span><span class="s0">default</span><span class="s1">: 
+                </span><span class="s0">break</span><span class="s1">; 
+        } 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">configure_button(){ 
+        </span><span class="s2">// first check for permissions</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(ActivityCompat.checkSelfPermission(</span><span class="s0">this</span><span class="s1">, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &amp;&amp; ActivityCompat.checkSelfPermission(</span><span class="s0">this</span><span class="s1">, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { 
+            </span><span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) { 
+                requestPermissions(</span><span class="s0">new </span><span class="s1">String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET} 
+                        ,</span><span class="s4">10</span><span class="s1">); 
+            } 
+            </span><span class="s0">return</span><span class="s1">; </span><span class="s2">//jumps out of the loop</span><span class="s1"> 
+        } 
+        </span><span class="s2">// this code won't execute IF permissions are not allowed, because in the line above there is return statement.</span><span class="s1"> 
+        b.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { </span><span class="s2">//single instance of OnClickListener</span><span class="s1"> 
+ 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                </span><span class="s2">//noinspection MissingPermission</span><span class="s1"> 
+                locationManager.requestLocationUpdates(</span><span class="s3">&quot;gps&quot;</span><span class="s1">, </span><span class="s4">1000</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, listener); </span><span class="s2">//just listening every second to your location. via GPS</span><span class="s1"> 
+ 
+ 
+ 
+            } 
+ 
+        }); 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>
